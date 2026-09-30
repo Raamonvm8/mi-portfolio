@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Gradiente para el texto -->
+    <linearGradient id="rvmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#646cff" />
+      <stop offset="50%" stop-color="#00d2ff" />
+      <stop offset="100%" stop-color="#2ecc71" />
+    </linearGradient>
+    <!-- Filtro de brillo sutil -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Fondo Dark Mode Squircle -->
+  <rect width="512" height="512" rx="128" fill="#0f172a" stroke="rgba(100, 108, 255, 0.3)" stroke-width="12"/>
+
+  <!-- Texto RVM estilo código -->
+  <text x="50%" y="53%" 
+        dominant-baseline="central" 
+        text-anchor="middle" 
+        fill="url(#rvmGrad)" 
+        font-family="system-ui, -apple-system, 'Segoe UI', Roboto, monospace" 
+        font-weight="900" 
+        font-size="145" 
+        letter-spacing="-6"
+        filter="url(#glow)">
+    &lt;RVM/&gt;
+  </text>
+</svg>
