@@ -5,8 +5,13 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   padding: 2rem 1rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ===== LAYOUT BASE ===== */
 .portfolio-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -14,6 +19,9 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+
+/* Evita que los hijos del grid desborden por contenido largo */
+.portfolio-container > * { min-width: 0; }
 
 .bento-box {
   background-color: #1e293b;
@@ -24,26 +32,76 @@
   transition: transform 0.2s, border-color 0.2s;
 }
 
-.bento-box:hover {
-  transform: translateY(-2px);
-  border-color: #3b82f6;
+/* 1 / -1 = ancho completo, funciona con cualquier nº de columnas */
+.hero,
+.skills,
+.other-exp,
+.education-languages,
+.projects-section,
+.tech-experience-section {
+  grid-column: 1 / -1;
 }
 
-/* Modificado: Ahora ambos ocupan el ancho completo para organizar mejor las 16 barras */
-.hero {
-  grid-column: span 3;
+/* ===== TIPOGRAFÍA ===== */
+h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); margin: 0 0 0.5rem 0; overflow-wrap: anywhere; }
+h2 { font-size: clamp(1.05rem, 4vw, 1.3rem); color: #94a3b8; font-weight: 400; margin-bottom: 1rem; }
+h3 { margin-top: 0; color: #3b82f6; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; overflow-wrap: anywhere; }
+h4 { margin: 0 0 1rem 0; color: #94a3b8; font-weight: 500; }
+p  { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; overflow-wrap: anywhere; }
+.subtitle { color: #94a3b8; margin-bottom: 1.5rem; }
+.highlight { color: #3b82f6; }
+
+/* ===== BOTONES ===== */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: center;
+}
+.btn.secondary { background-color: #334155; color: #f8fafc; }
+
+.contacto-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
-/* Sustituye la antigua sección de skills por esta */
+.btn.mini { padding: 6px 12px; font-size: 0.8rem; }
 
-.skills {
-  grid-column: span 3;
+/* ===== TAGS / BADGES ===== */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.tag {
+  background-color: #334155;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.tag.mini {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #e0e0f0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Contenedor que agrupa las 4 categorías en un panel de 2x2 */
+/* ===== SKILLS ===== */
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem 3rem;
   margin-top: 1.5rem;
 }
@@ -65,10 +123,9 @@
   gap: 0.85rem;
 }
 
-/* Alineación de nombre de herramienta + barra */
 .skill-item {
   display: grid;
-  grid-template-columns: 160px 1fr;
+  grid-template-columns: 160px minmax(0, 1fr);
   align-items: center;
   gap: 1rem;
 }
@@ -77,6 +134,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: #e2e8f0;
+  overflow-wrap: anywhere;
 }
 
 .progress-bar-bg {
@@ -85,7 +143,6 @@
   border-radius: 4px;
   overflow: hidden;
 }
-
 .progress-bar-fill {
   background-color: #3b82f6;
   height: 100%;
@@ -93,304 +150,8 @@
   transition: width 0.5s ease-in-out;
 }
 
-/* Asegúrate de añadir esto a tu media query de móvil al final del archivo */
-@media (max-width: 768px) {
-  .categories-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  .skill-item {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
-  }
-}
-
-.tech-experience-grid {
-  grid-column: span 3;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.other-exp {
-  grid-column: span 3;
-}
-
-h1 { font-size: 2.2rem; margin: 0 0 0.5rem 0; }
-h2 { font-size: 1.3rem; color: #94a3b8; font-weight: 400; margin-bottom: 1rem; }
-h3 { margin-top: 0; color: #3b82f6; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px;}
-h4 { margin: 0 0 1rem 0; color: #94a3b8; font-weight: 500; }
-p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
-.subtitle { color: #94a3b8; margin-bottom: 1.5rem; }
-
-.highlight { color: #3b82f6; }
-
-.btn {
-  display: inline-block;
-  padding: 0.6rem 1.2rem;
-  background-color: #3b82f6;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  margin-right: 0.5rem;
-  cursor: pointer;
-}
-.btn.secondary { background-color: #334155; color: #f8fafc; }
-
-.tags-container { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.tag {
-  background-color: #334155;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-}
-.tag.mini { background-color: #0f172a; font-size: 0.75rem; color: #3b82f6; }
-
-.badge {
-  background-color: rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-.date { float: right; color: #64748b; font-size: 0.85rem; }
-
-.other-job-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #334155;
-  padding: 0.75rem 0;
-}
-.other-job-item:last-child { border: none; }
-.other-job-item p { margin: 0.2rem 0 0 0; font-size: 0.85rem; color: #94a3b8; }
-.soft-skill-badge {
-  background-color: #10b981;
-  color: white;
-  padding: 0.3rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
-/* Añade esto a tu archivo de estilos */
-
-.education-languages {
-  grid-column: span 3;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr; /* Le damos un pelín más de espacio a los estudios */
-  gap: 3rem;
-}
-
-/* Estilos de la zona de educación */
-.edu-item {
-  margin-bottom: 1.5rem;
-  border-left: 2px solid #3b82f6;
-  padding-left: 1rem;
-}
-.edu-item:last-child { margin-bottom: 0; }
-.edu-item h4 { margin: 0 0 0.2rem 0; color: #f8fafc; font-size: 1.1rem; }
-.institution { color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; }
-
-/* Botón sutil para el PDF */
-.btn-verify {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #3b82f6;
-  text-decoration: none;
-  background-color: rgba(59, 130, 246, 0.1);
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  transition: background-color 0.2s;
-}
-.btn-verify:hover {
-  background-color: rgba(59, 130, 246, 0.2);
-}
-
-/* Estilos de la zona de idiomas */
-.lang-item {
-  background-color: #0f172a;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  border: 1px solid #334155;
-}
-.lang-item:last-child { margin-bottom: 0; }
-
-.lang-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.4rem;
-}
-.lang-header strong { color: #f8fafc; font-size: 1rem; }
-
-.lang-level {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-.lang-detail {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #94a3b8;
-  line-height: 1.4;
-}
-
-/* Bento Grid para Proyectos */
-.projects-section {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.project-card {
-  background: var(--bg-card, #1e1e2f);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.25s ease, border-color 0.25s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--highlight-color, #646cff);
-}
-
-/* Previsualización e Imagen */
-.project-image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  background: #141421;
-  overflow: hidden;
-}
-
-.project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.project-img-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
-  font-weight: 600;
-  color: #a0a0b8;
-}
-
-/* Badges de Estado */
-.status-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 600;
-  backdrop-filter: blur(8px);
-}
-
-.status-badge.publicado {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-  border: 1px solid rgba(46, 204, 113, 0.4);
-}
-
-.status-badge.personal {
-  background: rgba(52, 152, 219, 0.2);
-  color: #3498db;
-  border: 1px solid rgba(52, 152, 219, 0.4);
-}
-
-.status-badge.en-desarrollo {
-  background: rgba(241, 196, 15, 0.2);
-  color: #f1c40f;
-  border: 1px solid rgba(241, 196, 15, 0.4);
-}
-
-/* Contenido y Acciones */
-.project-content {
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  flex-grow: 1;
-}
-
-.project-content h4 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.project-content p {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-  line-height: 1.4;
-}
-
-.project-actions {
-  margin-top: auto;
-  display: flex;
-  flex-wrap: wrap; /* 👈 Permite que si no caben en una sola línea bajen sin romperse */
-  gap: 0.6rem;
-  align-items: center;
-}
-
-/* ✈️ Estilo de Botón Telegram Personalizado */
-.btn.telegram {
-  background: #0088cc;
-  color: #ffffff;
-  border: 1px solid #0088cc;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  box-shadow: 0 2px 8px rgba(0, 136, 204, 0.25);
-  transition: all 0.25s ease;
-}
-
-.btn.telegram:hover {
-  background: #0077b5;
-  border-color: #0077b5;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 136, 204, 0.45);
-}
-
-.btn.mini {
-  padding: 6px 12px;
-  font-size: 0.8rem;
-}
-
-.private-label {
-  font-size: 0.8rem;
-  opacity: 0.6;
-  font-style: italic;
-}
-
-/* Sección de Experiencia IT */
+/* ===== EXPERIENCIA IT ===== */
 .tech-experience-section {
-  grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -401,6 +162,7 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   flex-direction: column;
   gap: 0.4rem;
 }
+.section-header h3 { margin-bottom: 0; }
 
 .section-badge {
   display: inline-block;
@@ -415,9 +177,44 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   border: 1px solid rgba(100, 108, 255, 0.3);
 }
 
+.live-counter-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #2ecc71;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  box-shadow: 0 0 12px rgba(46, 204, 113, 0.15);
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2ecc71;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  animation: pulse-dot 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%   { transform: scale(0.9); opacity: 0.4; }
+  50%  { transform: scale(1.3); opacity: 1; box-shadow: 0 0 8px #2ecc71; }
+  100% { transform: scale(0.9); opacity: 0.4; }
+}
+
 .tech-experience-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* min(100%, 320px) evita el desbordamiento en pantallas estrechas */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: 1.5rem;
 }
 
@@ -429,16 +226,10 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  min-width: 0;
   transition: all 0.3s ease;
 }
 
-.job-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(100, 108, 255, 0.5);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-
-/* Tarjeta destacada para proyectos clave como Botpress o RV Oposiciones */
 .job-card.featured-card {
   background: linear-gradient(135deg, rgba(30, 30, 50, 0.7) 0%, rgba(20, 20, 35, 0.9) 100%);
   border-left: 4px solid #646cff;
@@ -448,32 +239,26 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0.6rem 1rem;
   flex-wrap: wrap;
 }
 
-.badge-tech {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #2ecc71;
-  background: rgba(46, 204, 113, 0.15);
-  padding: 2px 8px;
-  border-radius: 6px;
-  margin-bottom: 0.4rem;
-  display: inline-block;
-}
+.job-titles { min-width: 0; }
 
-.job-titles h3 {
+.job-titles .company-title {
   margin: 0;
   font-size: 1.25rem;
+  font-weight: 800;
   color: #ffffff;
+  letter-spacing: -0.3px;
+  text-transform: none;
 }
 
-.job-titles h4 {
+.job-titles .job-role {
   margin: 0.3rem 0 0 0;
-  font-size: 0.95rem;
-  color: #a0a0b8;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #646cff;
 }
 
 .date-badge {
@@ -492,123 +277,201 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   color: #d1d1e0;
 }
 
-.tags-container {
+/* ===== OTRAS EXPERIENCIAS ===== */
+.other-job-item {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #334155;
+  padding: 0.75rem 0;
+}
+.other-job-item:last-child { border-bottom: none; }
+.other-job-item > div { min-width: 0; }
+.other-job-item p { margin: 0.2rem 0 0 0; font-size: 0.85rem; color: #94a3b8; }
+
+.soft-skill-badge {
+  background-color: #10b981;
+  color: white;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+/* ===== ESTUDIOS E IDIOMAS ===== */
+.education-languages {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 3rem;
+}
+
+.edu-item {
+  margin-bottom: 1.5rem;
+  border-left: 2px solid #3b82f6;
+  padding-left: 1rem;
+}
+.edu-item:last-child { margin-bottom: 0; }
+.edu-item h4 { margin: 0 0 0.2rem 0; color: #f8fafc; font-size: 1.1rem; }
+.institution { color: #94a3b8; font-size: 0.9rem; margin: 0 0 0.5rem 0; }
+
+.date {
+  display: block;          /* antes: float:right (se solapaba en móvil) */
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 0.3rem;
+}
+
+.btn-verify {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #3b82f6;
+  text-decoration: none;
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  transition: background-color 0.2s;
+}
+.btn-verify:hover { background-color: rgba(59, 130, 246, 0.2); }
+
+.lang-item {
+  background-color: #0f172a;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #334155;
+}
+.lang-item:last-child { margin-bottom: 0; }
+
+.lang-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
-  margin-top: auto;
+  flex-wrap: wrap;
+  margin-bottom: 0.4rem;
 }
+.lang-header strong { color: #f8fafc; font-size: 1rem; }
 
-.tag.mini {
-  font-size: 0.75rem;
-  background: rgba(255, 255, 255, 0.07);
-  padding: 4px 10px;
-  border-radius: 6px;
-  color: #e0e0f0;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.lang-level {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
+.lang-detail { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.4; }
 
-/* Título de la Empresa (El elemento visualmente más importante) */
-.company-title {
-  margin: 0;
-  font-size: 1.4rem;        /* Tamaño más grande */
-  font-weight: 800;          /* Letra más gruesa */
-  color: #ffffff;
-  letter-spacing: -0.3px;
-}
-
-/* Subtítulo del Puesto de trabajo */
-.job-role {
-  margin: 0.2rem 0 0 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #646cff;            /* Color de acento para diferenciarlo claramente */
-}
-
-/* Ajustes de la tarjeta */
-.job-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 1.5rem;
+/* ===== PROYECTOS ===== */
+.projects-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  transition: all 0.3s ease;
+  gap: 1.5rem;
 }
 
-.job-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(100, 108, 255, 0.5);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.5rem;
 }
 
-.job-card.featured-card {
-  background: linear-gradient(135deg, rgba(30, 30, 50, 0.7) 0%, rgba(20, 20, 35, 0.9) 100%);
-  border-left: 4px solid #646cff;
+.project-card {
+  background: var(--bg-card, #1e1e2f);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-/* Contenedor flexible para el título y el contador */
-.title-with-counter {
+.project-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #141421;
+  overflow: hidden;
+}
+.project-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.project-img-placeholder {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+  font-weight: 600;
+  color: #a0a0b8;
+}
+
+.status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  backdrop-filter: blur(8px);
+}
+.status-badge.publicado {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.4);
+}
+.status-badge.personal {
+  background: rgba(52, 152, 219, 0.2);
+  color: #3498db;
+  border: 1px solid rgba(52, 152, 219, 0.4);
+}
+.status-badge.en-desarrollo {
+  background: rgba(241, 196, 15, 0.2);
+  color: #f1c40f;
+  border: 1px solid rgba(241, 196, 15, 0.4);
+}
+
+.project-content {
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
   gap: 0.8rem;
+  flex-grow: 1;
+}
+.project-content h4 { margin: 0; font-size: 1.2rem; color: #f8fafc; }
+.project-content p  { margin: 0; font-size: 0.9rem; opacity: 0.85; line-height: 1.4; }
+
+.project-actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
 }
 
-.title-with-counter h3 {
-  margin: 0;
-}
-
-/* Insignia del Contador en Vivo */
-.live-counter-badge {
+.btn.telegram {
+  background: #0088cc;
+  color: #ffffff;
+  border: 1px solid #0088cc;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: #2ecc71;
-  background: rgba(46, 204, 113, 0.1);
-  border: 1px solid rgba(46, 204, 113, 0.3);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-family: 'Courier New', Courier, monospace; /* Mantiene ancho fijo de números */
-  box-shadow: 0 0 12px rgba(46, 204, 113, 0.15);
+  gap: 0.3rem;
+  box-shadow: 0 2px 8px rgba(0, 136, 204, 0.25);
+  transition: all 0.25s ease;
 }
 
-/* Punto parpadeante estilo "Live" */
-.live-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #2ecc71;
-  border-radius: 50%;
-  display: inline-block;
-  animation: pulse-dot 1.5s infinite ease-in-out;
-}
+.private-label { font-size: 0.8rem; opacity: 0.6; font-style: italic; }
 
-@keyframes pulse-dot {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 1;
-    box-shadow: 0 0 8px #2ecc71;
-  }
-  100% {
-    transform: scale(0.9);
-    opacity: 0.4;
-  }
-}
-
-/* Overlay oscuro con desenfoque de fondo */
+/* ===== MODAL DE CONTACTO ===== */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;                      /* en vez de 100vw/100vh */
   background: rgba(10, 10, 20, 0.75);
   backdrop-filter: blur(8px);
   display: flex;
@@ -616,10 +479,10 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   align-items: center;
   z-index: 1000;
   padding: 1rem;
+  overflow-y: auto;
   animation: fadeIn 0.25s ease-out;
 }
 
-/* Tarjeta Modal Bento Box */
 .modal-card {
   position: relative;
   background: #141421;
@@ -628,6 +491,8 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   padding: 2rem;
   max-width: 460px;
   width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
@@ -643,20 +508,15 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   color: #a0a0b8;
   font-size: 1.2rem;
   cursor: pointer;
+  padding: 0.3rem;
   transition: color 0.2s;
 }
+.modal-close:hover { color: #ffffff; }
 
-.modal-close:hover {
-  color: #ffffff;
-}
+.modal-header { padding-right: 2rem; }
+.modal-header h3 { margin: 0 0 0.5rem 0; font-size: 1.3rem; color: #ffffff; }
+.modal-header .subtitle { margin-bottom: 0; }
 
-.modal-header h3 {
-  margin: 0;
-  font-size: 1.3rem;
-  color: #ffffff;
-}
-
-/* Caja táctil para copiar el correo */
 .email-display-box {
   background: rgba(255, 255, 255, 0.05);
   border: 1px dashed rgba(100, 108, 255, 0.4);
@@ -665,20 +525,21 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
-.email-display-box:hover {
-  background: rgba(100, 108, 255, 0.1);
-  border-color: #646cff;
-}
+.email-display-box:hover { background: rgba(100, 108, 255, 0.1); border-color: #646cff; }
 
 .email-text {
   font-family: monospace;
   font-weight: 700;
   color: #00d2ff;
   font-size: 0.95rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .copy-badge {
@@ -687,20 +548,11 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   padding: 4px 8px;
   border-radius: 6px;
   color: #ffffff;
+  white-space: nowrap;
 }
+.copy-badge.copied { background: #2ecc71; color: #000000; font-weight: 700; }
 
-.copy-badge.copied {
-  background: #2ecc71;
-  color: #000000;
-  font-weight: 700;
-}
-
-/* Botones de opciones */
-.contact-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
+.contact-options { display: flex; flex-direction: column; gap: 0.6rem; }
 
 .btn.modal-btn {
   width: 100%;
@@ -709,46 +561,79 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   padding: 0.7rem;
   border-radius: 10px;
 }
-
-.btn.modal-btn.gmail {
-  background: #ea4335;
-  color: #ffffff;
-  border: none;
-}
-
-.btn.modal-btn.gmail:hover {
-  background: #d93025;
-}
-
-.btn.modal-btn.outlook {
-  background: #0078d4;
-  color: #ffffff;
-  border: none;
-}
-
-.btn.modal-btn.outlook:hover {
-  background: #106ebe;
-}
+.btn.modal-btn.gmail   { background: #ea4335; color: #fff; border: none; }
+.btn.modal-btn.outlook { background: #0078d4; color: #fff; border: none; }
+.btn.modal-btn.gmail:hover   { background: #d93025; }
+.btn.modal-btn.outlook:hover { background: #106ebe; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* Ajuste móvil */
-@media (max-width: 768px) {
-  .education-languages {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+/* ===== HOVER SOLO EN DISPOSITIVOS CON RATÓN ===== */
+@media (hover: hover) {
+  .bento-box:hover { transform: translateY(-2px); border-color: #3b82f6; }
+  .project-card:hover { transform: translateY(-4px); border-color: var(--highlight-color, #646cff); }
+  .job-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(100, 108, 255, 0.5);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .btn.telegram:hover {
+    background: #0077b5;
+    border-color: #0077b5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 136, 204, 0.45);
   }
 }
 
-/* Responsive: En móviles pasa todo a 1 columna automáticamente */
+/* ===== RESPONSIVE: TABLET / MÓVIL ===== */
 @media (max-width: 768px) {
-  .portfolio-container, .tech-experience-grid, .skills-grid {
-    grid-template-columns: 1fr;
+  :host { padding: 1rem 0.75rem; }
+
+  .portfolio-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
   }
-  .skills-grid { gap: 1rem; }
-  .skill-item { grid-template-columns: 1fr; gap: 0.25rem; }
+
+  .bento-box { padding: 1.1rem; border-radius: 14px; }
+
+  h3 { font-size: 1.15rem; letter-spacing: 0.5px; }
+
+  /* Skills */
+  .categories-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .skill-item { grid-template-columns: minmax(0, 1fr); gap: 0.35rem; }
+
+  /* Experiencia */
+  .tech-experience-grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .job-card { padding: 1.1rem; }
+  .card-header { flex-direction: column; align-items: flex-start; }
+  .job-titles .company-title { font-size: 1.15rem; }
+
+  /* Otras experiencias */
   .other-job-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+  .soft-skill-badge { white-space: normal; }
+
+  /* Estudios e idiomas */
+  .education-languages { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+
+  /* Proyectos */
+  .projects-grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .project-image-wrapper { height: 160px; }
+  .project-content { padding: 1rem; }
+
+  /* Hero: botones a ancho completo */
+  .contacto-links .btn { flex: 1 1 100%; }
+
+  /* Modal */
+  .modal-overlay { align-items: flex-end; padding: 0.5rem; }
+  .modal-card { padding: 1.4rem; border-radius: 18px; }
+}
+
+/* ===== MÓVILES MUY PEQUEÑOS ===== */
+@media (max-width: 380px) {
+  h1 { font-size: 1.5rem; }
+  .bento-box { padding: 0.9rem; }
+  .btn { padding: 0.55rem 1rem; }
 }
