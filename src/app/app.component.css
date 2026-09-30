@@ -134,6 +134,7 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
   border-radius: 8px;
   font-weight: bold;
   margin-right: 0.5rem;
+  cursor: pointer;
 }
 .btn.secondary { background-color: #334155; color: #f8fafc; }
 
@@ -599,6 +600,139 @@ p { color: #cbd5e1; line-height: 1.5; font-size: 0.95rem; }
     transform: scale(0.9);
     opacity: 0.4;
   }
+}
+
+/* Overlay oscuro con desenfoque de fondo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 10, 20, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* Tarjeta Modal Bento Box */
+.modal-card {
+  position: relative;
+  background: #141421;
+  border: 1px solid rgba(100, 108, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: transparent;
+  border: none;
+  color: #a0a0b8;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+/* Caja táctil para copiar el correo */
+.email-display-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px dashed rgba(100, 108, 255, 0.4);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.email-display-box:hover {
+  background: rgba(100, 108, 255, 0.1);
+  border-color: #646cff;
+}
+
+.email-text {
+  font-family: monospace;
+  font-weight: 700;
+  color: #00d2ff;
+  font-size: 0.95rem;
+}
+
+.copy-badge {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #ffffff;
+}
+
+.copy-badge.copied {
+  background: #2ecc71;
+  color: #000000;
+  font-weight: 700;
+}
+
+/* Botones de opciones */
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.btn.modal-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 0.7rem;
+  border-radius: 10px;
+}
+
+.btn.modal-btn.gmail {
+  background: #ea4335;
+  color: #ffffff;
+  border: none;
+}
+
+.btn.modal-btn.gmail:hover {
+  background: #d93025;
+}
+
+.btn.modal-btn.outlook {
+  background: #0078d4;
+  color: #ffffff;
+  border: none;
+}
+
+.btn.modal-btn.outlook:hover {
+  background: #106ebe;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Ajuste móvil */

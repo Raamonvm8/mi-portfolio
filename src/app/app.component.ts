@@ -68,6 +68,26 @@ export class AppComponent {
   tiempoExperiencia: string = '';
   private timerInterval: any;
 
+  email = 'ramonprotic@outlook.es';
+  mostrarModalContacto = false;
+  emailCopiado = false;
+
+  abrirModalContacto() {
+    this.mostrarModalContacto = true;
+  }
+
+  cerrarModalContacto() {
+    this.mostrarModalContacto = false;
+  }
+
+  copiarEmail() {
+    navigator.clipboard.writeText(this.email);
+    this.emailCopiado = true;
+    setTimeout(() => {
+      this.emailCopiado = false;
+    }, 2000);
+  }
+
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {

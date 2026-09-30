@@ -6,7 +6,9 @@
     <h2>{{ titulo }}</h2>
     <p>{{ sobreMi }}</p>
     <div class="contacto-links">
-      <a href="mailto:ramonprotic@outlook.es" class="btn">✉️ Contactar</a>
+      <button type="button" (click)="abrirModalContacto()" class="btn">
+        ✉️ Contactar
+      </button>
       <a href="https://github.com/Raamonvm8" target="_blank" class="btn secondary">🐙 GitHub</a>
     </div>
   </header>
@@ -172,4 +174,49 @@
     </div>
   </section>
 
+</div>
+
+<!-- 📬 Ventana Emergente (Modal de Contacto) -->
+<div class="modal-overlay" *ngIf="mostrarModalContacto" (click)="cerrarModalContacto()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    
+    <button class="modal-close" (click)="cerrarModalContacto()">✕</button>
+
+    <div class="modal-header">
+      <h3>📬 Enviar un mensaje</h3>
+      <p class="subtitle">Elige cómo prefieres ponerte en contacto conmigo:</p>
+    </div>
+
+    <!-- Caja interactiva para ver y copiar el correo con 1 clic -->
+    <div class="email-display-box" (click)="copiarEmail()" title="Haz clic para copiar">
+      <span class="email-text">{{ email }}</span>
+      <span class="copy-badge" [class.copied]="emailCopiado">
+        {{ emailCopiado ? '✅ ¡Copiado!' : '📋 Copiar' }}
+      </span>
+    </div>
+
+    <!-- Opciones directas de envío -->
+    <div class="contact-options">
+      <!-- 1. Gmail en el Navegador -->
+      <a [href]="'https://mail.google.com/mail/?view=cm&fs=1&to=' + email + '&su=Contacto%20desde%20el%20Portfolio'" 
+         target="_blank" 
+         class="btn modal-btn gmail">
+        🌐 Redactar en Gmail Web
+      </a>
+
+      <!-- 2. Outlook / Hotmail en el Navegador -->
+      <a [href]="'https://outlook.live.com/mail/0/deeplink/compose?to=' + email + '&subject=Contacto%20desde%20el%20Portfolio'" 
+         target="_blank" 
+         class="btn modal-btn outlook">
+        💙 Redactar en Outlook Web
+      </a>
+
+      <!-- 3. App Local del Sistema -->
+      <a [href]="'mailto:' + email + '?subject=Contacto%20desde%20el%20Portfolio'" 
+         class="btn modal-btn secondary">
+        💻 App de Correo del Sistema
+      </a>
+    </div>
+
+  </div>
 </div>
